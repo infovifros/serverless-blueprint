@@ -1,0 +1,285 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "serverless-blueprint",
+    "description": "Production-ready AWS Serverless starter — Items CRUD API.\n\nAll endpoints that accept a request body validate the payload against a JSON Schema before invoking the business-logic function.",
+    "version": "1.0.0",
+    "contact": {
+      "email": "your-email@example.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000",
+      "description": "Local (serverless-offline)"
+    },
+    {
+      "url": "https://your-api-id.execute-api.us-east-1.amazonaws.com",
+      "description": "AWS dev stage"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Items",
+      "description": "In-memory CRUD operations on Item resources"
+    },
+    {
+      "name": "Docs",
+      "description": "API documentation endpoints"
+    }
+  ],
+  "paths": {
+    "/v1/items": {
+      "get": {
+        "summary": "Returns all items in the in-memory store.",
+        "tags": [
+          "Items"
+        ],
+        "operationId": "list-items",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request — validation error"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a new item and returns it with its generated UUID.",
+        "tags": [
+          "Items"
+        ],
+        "operationId": "create-item",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request — validation error"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "description",
+                  "price"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  },
+                  "price": {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/items/{id}": {
+      "get": {
+        "summary": "Returns a single item by its UUID.",
+        "tags": [
+          "Items"
+        ],
+        "operationId": "get-item",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request — validation error"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Partially updates an existing item by its UUID.",
+        "tags": [
+          "Items"
+        ],
+        "operationId": "update-item",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request — validation error"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  },
+                  "price": {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes an item by its UUID. Returns 204 No Content on success.",
+        "tags": [
+          "Items"
+        ],
+        "operationId": "delete-item",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request — validation error"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/swagger": {
+      "get": {
+        "summary": "Serves the interactive Swagger UI.",
+        "tags": [
+          "Docs"
+        ],
+        "operationId": "swagger-ui",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request — validation error"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/swagger.json": {
+      "get": {
+        "summary": "Returns the raw OpenAPI 3.0 JSON specification.",
+        "tags": [
+          "Docs"
+        ],
+        "operationId": "swagger-json",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request — validation error"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "UpdateItemRequest",
+  "additionalProperties": true,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "##body## New display name for the item.",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "description": {
+      "type": "string",
+      "description": "##body## New description for the item.",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "price": {
+      "type": "number",
+      "description": "##body## New unit price in USD.",
+      "minimum": 0
+    }
+  }
+}

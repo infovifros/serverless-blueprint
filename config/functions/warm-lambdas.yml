@@ -1,0 +1,12 @@
+# ─── Keep-warm scheduler ──────────────────────────────────────────────────────
+# Invokes all HTTP API lambdas on a schedule to prevent cold starts.
+# The X-KEEP-LAMBDA-WARN header causes each handler to return immediately
+# without executing any business logic (handled by BaseHandler).
+
+warm-lambdas:
+  handler: event-handlers/warm-lambdas/handler.handler
+  description: Scheduled function that pings all lambdas to keep them warm.
+  events:
+    - schedule:
+        rate: ${self:custom.environments.${self:provider.stage}.WARM_LAMBDAS_SCHEDULE}
+        enabled: ${self:custom.environments.${self:provider.stage}.WARM_LAMBDAS_ENABLE}

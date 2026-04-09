@@ -1,0 +1,13 @@
+# ─── Local development environment ────────────────────────────────────────────
+# These values are only used when running `npm start` (serverless-offline).
+# Never commit real secrets here — use AWS SSM / Secrets Manager in real stages.
+
+SERVICE_NAME: ${self:service}
+SERVICE_STAGE: ${self:provider.stage}
+
+# Warm-lambda scheduler (disabled locally to avoid unwanted invocations)
+WARM_LAMBDAS_ENABLE: false
+WARM_LAMBDAS_SCHEDULE: "rate(5 minutes)"
+
+# Error alerting — leave empty locally; set to a real SNS ARN in dev/prod
+SNS_TOPIC_ARN_API_ERROR: ""

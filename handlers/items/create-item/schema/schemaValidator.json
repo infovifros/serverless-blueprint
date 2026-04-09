@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "CreateItemRequest",
+  "additionalProperties": true,
+  "required": ["name", "description", "price"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "##body## Display name of the item.",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "description": {
+      "type": "string",
+      "description": "##body## Human-readable description.",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "price": {
+      "type": "number",
+      "description": "##body## Unit price in USD. Must be zero or greater.",
+      "minimum": 0
+    }
+  }
+}

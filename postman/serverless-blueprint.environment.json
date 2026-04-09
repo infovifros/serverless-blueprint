@@ -1,0 +1,26 @@
+{
+  "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "name": "serverless-blueprint — Local",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000",
+      "type": "default",
+      "enabled": true,
+      "description": "Base URL for local development with serverless-offline. Change to your AWS API Gateway URL for deployed stages."
+    },
+    {
+      "key": "itemId",
+      "value": "",
+      "type": "default",
+      "enabled": true,
+      "description": "UUID of the last created item. Populated automatically by the 'Create Item' request post-script."
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "serverless-blueprint — Local",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "info": {
+    "_postman_id": "f1e2d3c4-b5a6-7890-fedc-ba0987654321",
+    "name": "serverless-blueprint",
+    "description": "Complete CRUD collection for the serverless-blueprint starter project.\n\nImport the matching environment file (`serverless-blueprint.environment.json`) and set `baseUrl` to `http://localhost:4000` for local development.\n\nRun requests in order: **List → Create → Get → Update → Delete**.\nThe Create request automatically stores the returned `id` in the `itemId` environment variable.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [],
+  "item": [
+    {
+      "name": "Items",
+      "description": "CRUD endpoints for the Item resource.",
+      "item": [
+        {
+          "name": "List Items",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "x-app-name", "value": "postman", "type": "text"},
+              {"key": "x-app-version", "value": "1.0.0", "type": "text"}
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/items",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "items"],
+              "query": [
+                {"key": "page", "value": "1", "description": "Page number (1-based).", "disabled": true},
+                {"key": "limit", "value": "10", "description": "Items per page (max 100).", "disabled": true}
+              ]
+            },
+            "description": "Returns all items in the in-memory store. Enable the query params to test pagination."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Item",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json && json.data && json.data.id) {",
+                  "  pm.environment.set('itemId', json.data.id);",
+                  "  console.log('itemId set to:', json.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json", "type": "text"},
+              {"key": "x-app-name", "value": "postman", "type": "text"},
+              {"key": "x-app-version", "value": "1.0.0", "type": "text"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Wireless Mouse\",\n  \"description\": \"Ergonomic wireless mouse with 6-month battery life.\",\n  \"price\": 39.99\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/items",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "items"]
+            },
+            "description": "Creates a new item. The response `data.id` is automatically stored in the `itemId` environment variable for use in subsequent requests."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Item",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "x-app-name", "value": "postman", "type": "text"},
+              {"key": "x-app-version", "value": "1.0.0", "type": "text"}
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/items/{{itemId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "items", "{{itemId}}"]
+            },
+            "description": "Retrieves a single item by UUID. Uses the `itemId` environment variable set by the Create request."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json", "type": "text"},
+              {"key": "x-app-name", "value": "postman", "type": "text"},
+              {"key": "x-app-version", "value": "1.0.0", "type": "text"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 34.99,\n  \"description\": \"Updated: Ergonomic wireless mouse, now with improved scroll wheel.\"\n}",
+              "options": {"raw": {"language": "json"}}
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/items/{{itemId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "items", "{{itemId}}"]
+            },
+            "description": "Partially updates an item. Only fields present in the body are changed — omitted fields keep their current values."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Item",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "x-app-name", "value": "postman", "type": "text"},
+              {"key": "x-app-version", "value": "1.0.0", "type": "text"}
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/items/{{itemId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "items", "{{itemId}}"]
+            },
+            "description": "Deletes the item. Returns HTTP 204 No Content on success."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Docs",
+      "description": "API documentation endpoints.",
+      "item": [
+        {
+          "name": "Swagger UI",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/swagger",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "swagger"]
+            },
+            "description": "Opens the interactive Swagger UI. Best viewed in a browser."
+          },
+          "response": []
+        },
+        {
+          "name": "Swagger JSON",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/swagger.json",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "swagger.json"]
+            },
+            "description": "Returns the raw OpenAPI 3.0 JSON spec."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
