@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true
+  },
+  "include": [
+    "handlers/**/interfaces/*.interface.ts",
+    "common/interfaces/*.ts"
+  ]
+}

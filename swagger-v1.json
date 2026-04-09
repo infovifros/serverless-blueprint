@@ -80,24 +80,27 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "name",
                   "description",
+                  "name",
                   "price"
                 ],
                 "properties": {
-                  "name": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 120
-                  },
                   "description": {
-                    "type": "string",
+                    "maxLength": 500,
                     "minLength": 1,
-                    "maxLength": 500
+                    "title": "description",
+                    "type": "string"
+                  },
+                  "name": {
+                    "maxLength": 120,
+                    "minLength": 1,
+                    "title": "name",
+                    "type": "string"
                   },
                   "price": {
-                    "type": "number",
-                    "minimum": 0
+                    "minimum": 0,
+                    "title": "price",
+                    "type": "number"
                   }
                 }
               }
@@ -177,19 +180,22 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 120
-                  },
                   "description": {
-                    "type": "string",
+                    "maxLength": 500,
                     "minLength": 1,
-                    "maxLength": 500
+                    "title": "description",
+                    "type": "string"
+                  },
+                  "name": {
+                    "maxLength": 120,
+                    "minLength": 1,
+                    "title": "name",
+                    "type": "string"
                   },
                   "price": {
-                    "type": "number",
-                    "minimum": 0
+                    "minimum": 0,
+                    "title": "price",
+                    "type": "number"
                   }
                 }
               }

@@ -13,7 +13,7 @@ dist/
 .env.*
 !.env.example
 
-# Schema hash sidecars (regenerated on install)
+# Schema hash sidecars (regenerated on install, not needed in version control)
 **/*.md5
 
 # OS

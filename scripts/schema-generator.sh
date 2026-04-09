@@ -77,14 +77,20 @@ generate_schema_if_changed() {
 
   echo "  [gen]  Regenerating schema: $output_schema"
 
+  # Resolve the project root (one level up from the scripts/ directory).
+  local project_root
+  project_root="$(cd "$(dirname "$0")/.." && pwd)"
+  local tsconfig_path="$project_root/tsconfig.schema.json"
+
   local stderr_output
-  # Suppress the generator's stderr to avoid polluting install output with
-  # internal type-resolution warnings unrelated to the generated schema.
+  # Pass tsconfig.json instead of the interface file directly so that the
+  # generator inherits skipLibCheck:true and avoids @types/glob type errors
+  # caused by the minimatch version mismatch pulled in by serverless.
   if stderr_output=$("$tjs_bin" \
     --titles \
     --required \
     --noExtraProps \
-    "$interface_file" \
+    "$tsconfig_path" \
     "$schema_class" \
     -o "$output_schema" 2>&1 >/dev/null); then
     echo "$current_hash" > "$hash_sidecar"
