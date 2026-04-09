@@ -1,0 +1,72 @@
+service: serverless-blueprint
+frameworkVersion: ">=3.1.0 <4.0.0"
+
+# ─── Custom ────────────────────────────────────────────────────────────────────
+custom:
+  serverless-offline:
+    httpPort: 4000
+    lambdaPort: 4001
+    noTimeout: true
+    noPrependStageInUrl: true
+
+  environments:
+    local: ${file(./config/env/local.yml)}
+    dev: ${file(./config/env/dev.yml)}
+
+# ─── Provider ──────────────────────────────────────────────────────────────────
+provider:
+  name: aws
+  runtime: nodejs22.x
+  region: us-east-1
+  stage: ${opt:stage, 'local'}
+  timeout: 29
+  versionFunctions: false
+
+  environment: ${self:custom.environments.${self:provider.stage}}
+
+  httpApi:
+    cors:
+      allowedOrigins: "*"
+      allowedMethods: [GET, POST, PUT, DELETE, PATCH, OPTIONS]
+      allowedHeaders:
+        - Content-Type
+        - Authorization
+        - X-Api-Key
+        - x-transaction-request-id
+        - x-remote-application-name
+        - x-app-name
+        - x-app-version
+        - x-user-token
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - lambda:InvokeFunction
+          Resource:
+            - "arn:aws:lambda:${self:provider.region}:*:function:${self:service}-${self:provider.stage}-*"
+
+# ─── Functions ─────────────────────────────────────────────────────────────────
+# Each file groups one domain or concern.
+# api/   → HTTP endpoints (API Gateway connected)
+# system → Event-driven infrastructure handlers
+functions:
+  - ${file(config/functions/items.yml)}
+  - ${file(config/functions/docs.yml)}
+  - ${file(config/functions/system.yml)}
+
+# ─── Packaging ─────────────────────────────────────────────────────────────────
+package:
+  individually: false
+  patterns:
+    - "!node_modules/**/*.ts"
+    - "!node_modules/**/aws-sdk/**"
+    - "!.git/**"
+    - "!docs/postman/**"
+    - "!scripts/**"
+
+# ─── Plugins ───────────────────────────────────────────────────────────────────
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline

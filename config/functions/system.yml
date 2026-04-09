@@ -1,0 +1,11 @@
+# ─── System / infrastructure event handlers ────────────────────────────────────
+# These Lambdas are NOT connected to API Gateway — they respond to EventBridge
+# schedules, SQS queues, SNS topics, and other AWS events.
+
+warm-up:
+  handler: src/events/system/warm-up/handler.handler
+  description: Scheduled function that pings all API Lambdas to prevent cold starts.
+  events:
+    - schedule:
+        rate: ${self:custom.environments.${self:provider.stage}.WARM_LAMBDAS_SCHEDULE}
+        enabled: ${self:custom.environments.${self:provider.stage}.WARM_LAMBDAS_ENABLE}

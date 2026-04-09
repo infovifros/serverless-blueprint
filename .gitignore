@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build output
+.build/
+dist/
+
+# Serverless Framework
+.serverless/
+
+# Environment secrets (never commit real values)
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Logs
+*.log
+npm-debug.log*

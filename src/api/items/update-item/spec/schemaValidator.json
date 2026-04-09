@@ -1,0 +1,70 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "description": "Request interface for `PUT /v1/items/:id`. All body fields are optional (partial update).",
+    "properties": {
+        "description": {
+            "description": "##body## New description for the item.",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "description",
+            "type": "string"
+        },
+        "headers": {
+            "additionalProperties": false,
+            "properties": {
+                "x-app-name": {
+                    "description": "Client application name.",
+                    "title": "x-app-name",
+                    "type": "string"
+                },
+                "x-app-version": {
+                    "description": "Client application version (semver string).",
+                    "title": "x-app-version",
+                    "type": "string"
+                },
+                "x-remote-application-name": {
+                    "description": "Name of the upstream application or client making the request.",
+                    "title": "x-remote-application-name",
+                    "type": "string"
+                },
+                "x-transaction-request-id": {
+                    "description": "Correlation ID that spans the full request chain across services.",
+                    "title": "x-transaction-request-id",
+                    "type": "string"
+                },
+                "x-user-token": {
+                    "description": "Opaque identity token forwarded from the caller.",
+                    "title": "x-user-token",
+                    "type": "string"
+                }
+            },
+            "title": "headers",
+            "type": "object"
+        },
+        "id": {
+            "description": "##path## UUID of the item to update.",
+            "title": "id",
+            "type": "string"
+        },
+        "name": {
+            "description": "##body## New display name for the item.",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "name",
+            "type": "string"
+        },
+        "price": {
+            "description": "##body## New unit price in USD.",
+            "minimum": 0,
+            "title": "price",
+            "type": "number"
+        }
+    },
+    "required": [
+        "headers",
+        "id"
+    ],
+    "type": "object"
+}
+

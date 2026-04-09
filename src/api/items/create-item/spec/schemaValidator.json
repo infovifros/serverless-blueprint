@@ -1,0 +1,67 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "description": "Request interface for `POST /v1/items`.",
+    "properties": {
+        "description": {
+            "description": "##body## Human-readable description.",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "description",
+            "type": "string"
+        },
+        "headers": {
+            "additionalProperties": false,
+            "properties": {
+                "x-app-name": {
+                    "description": "Client application name.",
+                    "title": "x-app-name",
+                    "type": "string"
+                },
+                "x-app-version": {
+                    "description": "Client application version (semver string).",
+                    "title": "x-app-version",
+                    "type": "string"
+                },
+                "x-remote-application-name": {
+                    "description": "Name of the upstream application or client making the request.",
+                    "title": "x-remote-application-name",
+                    "type": "string"
+                },
+                "x-transaction-request-id": {
+                    "description": "Correlation ID that spans the full request chain across services.",
+                    "title": "x-transaction-request-id",
+                    "type": "string"
+                },
+                "x-user-token": {
+                    "description": "Opaque identity token forwarded from the caller.",
+                    "title": "x-user-token",
+                    "type": "string"
+                }
+            },
+            "title": "headers",
+            "type": "object"
+        },
+        "name": {
+            "description": "##body## Display name of the item.",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "name",
+            "type": "string"
+        },
+        "price": {
+            "description": "##body## Unit price in USD. Must be zero or greater.",
+            "minimum": 0,
+            "title": "price",
+            "type": "number"
+        }
+    },
+    "required": [
+        "description",
+        "headers",
+        "name",
+        "price"
+    ],
+    "type": "object"
+}
+

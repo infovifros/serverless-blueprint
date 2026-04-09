@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/api/**/spec/request.interface.ts",
+    "src/shared/interfaces/*.ts"
+  ]
+}

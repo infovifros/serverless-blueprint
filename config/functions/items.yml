@@ -1,0 +1,41 @@
+# ─── Items CRUD endpoints ──────────────────────────────────────────────────────
+
+list-items:
+  handler: src/api/items/list-items/handler.handler
+  description: Returns all items in the in-memory store.
+  events:
+    - httpApi:
+        path: /v1/items
+        method: get
+
+get-item:
+  handler: src/api/items/get-item/handler.handler
+  description: Returns a single item by its UUID.
+  events:
+    - httpApi:
+        path: /v1/items/{id}
+        method: get
+
+create-item:
+  handler: src/api/items/create-item/handler.handler
+  description: Creates a new item and returns it with its generated UUID.
+  events:
+    - httpApi:
+        path: /v1/items
+        method: post
+
+update-item:
+  handler: src/api/items/update-item/handler.handler
+  description: Partially updates an existing item by its UUID.
+  events:
+    - httpApi:
+        path: /v1/items/{id}
+        method: put
+
+delete-item:
+  handler: src/api/items/delete-item/handler.handler
+  description: Deletes an item by its UUID. Returns 204 No Content on success.
+  events:
+    - httpApi:
+        path: /v1/items/{id}
+        method: delete

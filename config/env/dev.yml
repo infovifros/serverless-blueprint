@@ -1,0 +1,13 @@
+# ─── Development (AWS) environment ────────────────────────────────────────────
+# Values injected as Lambda environment variables when deploying to the dev stage.
+# Replace placeholder values with your actual AWS resource ARNs / identifiers.
+
+SERVICE_NAME: ${self:service}
+SERVICE_STAGE: ${self:provider.stage}
+
+# Warm-lambda scheduler — keep functions warm every 5 minutes
+WARM_LAMBDAS_ENABLE: true
+WARM_LAMBDAS_SCHEDULE: "cron(*/5 * * * ? *)"
+
+# SNS topic ARN for unhandled-error alerts (HandlerError with alertFlag = true)
+SNS_TOPIC_ARN_API_ERROR: "arn:aws:sns:us-east-1:YOUR_ACCOUNT_ID:YOUR_SNS_TOPIC"
