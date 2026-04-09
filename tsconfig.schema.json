@@ -4,7 +4,7 @@
     "skipLibCheck": true
   },
   "include": [
-    "handlers/**/interfaces/*.interface.ts",
-    "common/interfaces/*.ts"
+    "src/api/**/spec/request.interface.ts",
+    "src/shared/interfaces/*.ts"
   ]
 }

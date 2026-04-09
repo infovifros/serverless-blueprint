@@ -3,7 +3,7 @@
 //
 // Reads function definition YAML files, pairs each httpApi event with its JSON
 // schema (when one exists), and writes a complete OpenAPI 3.0 spec to
-// swagger-v1.json.
+// docs/openapi/swagger-v1.json.
 //
 // Usage: node scripts/generate-swagger.js
 // Called automatically by the `postinstall` npm script.
@@ -18,17 +18,17 @@ const YAML = require('yamljs');
 // ─── Config ───────────────────────────────────────────────────────────────────
 
 const ROOT_DIR = path.resolve(__dirname, '..');
-const OUTPUT_FILE = path.join(ROOT_DIR, 'swagger-v1.json');
+const OUTPUT_FILE = path.join(ROOT_DIR, 'docs/openapi/swagger-v1.json');
 
 const FUNCTION_CONFIG_FILES = [
   path.join(ROOT_DIR, 'config/functions/items.yml'),
-  path.join(ROOT_DIR, 'config/functions/functions.yml'),
+  path.join(ROOT_DIR, 'config/functions/docs.yml'),
 ];
 
 /** Maps a handler path to the location of its schemaValidator.json (if any). */
 const SCHEMA_MAP = {
-  'handlers/items/create-item/handler.handler': 'handlers/items/create-item/schema/schemaValidator.json',
-  'handlers/items/update-item/handler.handler': 'handlers/items/update-item/schema/schemaValidator.json',
+  'src/api/items/create-item/handler.handler': 'src/api/items/create-item/spec/schemaValidator.json',
+  'src/api/items/update-item/handler.handler': 'src/api/items/update-item/spec/schemaValidator.json',
 };
 
 // ─── Base OpenAPI spec ────────────────────────────────────────────────────────
@@ -152,6 +152,8 @@ function buildOperation(fnName, fnConfig, method, schema) {
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
+
+fs.mkdirSync(path.dirname(OUTPUT_FILE), {recursive: true});
 
 const spec = JSON.parse(JSON.stringify(baseSpec));
 

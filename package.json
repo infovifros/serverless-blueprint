@@ -7,8 +7,8 @@
     "start": "sls offline --noPrependStageInUrl --stage=local start",
     "start:dev": "sls offline --noPrependStageInUrl --stage=dev start",
     "deploy:dev": "sls deploy --stage=dev",
-    "lint": "ESLINT_USE_FLAT_CONFIG=false eslint '{common,handlers,event-handlers}/**/*.{ts,tsx}'",
-    "lint:fix": "ESLINT_USE_FLAT_CONFIG=false eslint '{common,handlers,event-handlers}/**/*.{ts,tsx}' --fix",
+    "lint": "ESLINT_USE_FLAT_CONFIG=false eslint 'src/**/*.{ts,tsx}'",
+    "lint:fix": "ESLINT_USE_FLAT_CONFIG=false eslint 'src/**/*.{ts,tsx}' --fix",
     "schema": "bash scripts/schema-generator.sh",
     "swagger": "node scripts/generate-swagger.js",
     "postinstall": "bash scripts/schema-generator.sh && node scripts/generate-swagger.js"

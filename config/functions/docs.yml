@@ -1,0 +1,17 @@
+# ─── Documentation endpoints ───────────────────────────────────────────────────
+
+swagger-ui:
+  handler: src/api/docs/swagger-ui/handler.handler
+  description: Serves the interactive Swagger UI.
+  events:
+    - httpApi:
+        path: /v1/swagger
+        method: get
+
+swagger-json:
+  handler: src/api/docs/swagger-json/handler.handler
+  description: Returns the raw OpenAPI 3.0 JSON specification.
+  events:
+    - httpApi:
+        path: /v1/swagger.json
+        method: get

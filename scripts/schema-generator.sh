@@ -10,13 +10,19 @@
 #
 # Format for SCHEMAS entries:
 #   "INTERFACE_FILE_PATH:INTERFACE_CLASS_NAME:OUTPUT_SCHEMA_PATH"
+#
+# The generator uses tsconfig.schema.json (not tsconfig.json) to avoid
+# including handler.ts files that import the not-yet-generated schema —
+# which would cause a circular bootstrap failure on a clean install.
+# tsconfig.schema.json also inherits skipLibCheck:true, preventing type
+# errors from the @types/glob ↔ minimatch version mismatch.
 # ──────────────────────────────────────────────────────────────────────────────
 
 set -euo pipefail
 
 declare -a SCHEMAS=(
-  "./handlers/items/create-item/interfaces/create-item.interface.ts:CreateItemRequest:handlers/items/create-item/schema/schemaValidator.json"
-  "./handlers/items/update-item/interfaces/update-item.interface.ts:UpdateItemRequest:handlers/items/update-item/schema/schemaValidator.json"
+  "src/api/items/create-item/spec/request.interface.ts:CreateItemRequest:src/api/items/create-item/spec/schemaValidator.json"
+  "src/api/items/update-item/spec/request.interface.ts:UpdateItemRequest:src/api/items/update-item/spec/schemaValidator.json"
 )
 
 # ─── Helper: compute MD5 cross-platform (macOS uses `md5 -q`, Linux `md5sum`) ─
@@ -83,7 +89,7 @@ generate_schema_if_changed() {
   local tsconfig_path="$project_root/tsconfig.schema.json"
 
   local stderr_output
-  # Pass tsconfig.json instead of the interface file directly so that the
+  # Pass tsconfig.schema.json instead of the interface file directly so that the
   # generator inherits skipLibCheck:true and avoids @types/glob type errors
   # caused by the minimatch version mismatch pulled in by serverless.
   if stderr_output=$("$tjs_bin" \
